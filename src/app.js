@@ -2,8 +2,8 @@ const express = require("express");
 const path = require("path");
 const cors = require("cors");
 const morgan = require("morgan");
-const Routes = require('./routes');
-const { errorHandler } = require("./middleware/errorHandler");
+const Routes = require("./routes");
+const middleware = require("./middleware/errorHandler");
 
 require("dotenv").config({ path: path.resolve(__dirname, "./.env") });
 
@@ -18,8 +18,8 @@ if (process.env.NODE_ENV === "developement") {
 
 app.get("/", (req, res) => res.send("<h1>Server is healthy! 💪<h1/>"));
 
-app.use("/api", Routes())
+app.use("/api", Routes());
 
-app.use(errorHandler)
+app.use(middleware.errorHandler);
 
 module.exports = app;
