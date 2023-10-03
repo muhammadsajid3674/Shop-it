@@ -1,4 +1,4 @@
-module.exports = class AuthRepository {
+module.exports = class ClientRepository {
    constructor(model) {
       this.model = model;
    }
@@ -31,6 +31,16 @@ module.exports = class AuthRepository {
       });
    }
 
+   getAllPaginate(userId, pageNumber, limit) {
+      return new Promise(async (resolve, reject) => {
+         const query = await this.model
+            .find({ userId })
+            .skip((Number(pageNumber) - 1) * Number(limit))
+            .limit(Number(limit));
+         query.exec().then((res) => resolve(res));
+      });
+   }
+
    findByResetToken(reset_token) {
       return new Promise((resolve, reject) => {
          this.model
@@ -45,14 +55,6 @@ module.exports = class AuthRepository {
          this.model
             .findByIdAndUpdate(id, obj, { new: true })
             .then((res) => resolve(res));
-      });
-   }
-
-   resetOne(email, password) {
-      return new Promise(async (resolve, reject) => {
-         const user = await this.getByEmail(email);
-         user.password = password;
-         user.save().then((res) => resolve(res));
       });
    }
 

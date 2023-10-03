@@ -4,10 +4,12 @@ const cors = require("cors");
 const morgan = require("morgan");
 const Routes = require("./routes");
 const middleware = require("./middleware/errorHandler");
+const cookieParser = require("cookie-parser");
 
 require("dotenv").config({ path: path.resolve(__dirname, "./.env") });
 
 const app = express();
+app.use(cookieParser());
 app.use(express.json()); // * parsing the incoming data
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({ origin: "*", credentials: true }));

@@ -17,13 +17,19 @@ exports.unknownEndpoint = (request, response, next) => {
 };
 
 exports.errorHandler = (err, req, res, next) => {
-   let statusCode = 500;
-   let errorMessage = "Server Error";
-   if (isHttpError(err)) {
-      statusCode = err.status;
-      errorMessage = err.message;
-   }
-   res.status(statusCode).json({ success: false, message: errorMessage });
+   const statusCode = res.statusCode === 200 ? 500 : res.statusCode
+   res.status(statusCode)
+   res.json({
+       message: err.message,
+       stack: process.env.NODE_ENV === 'production' ? null : err.stack
+   })
+   // let statusCode = 500;
+   // let errorMessage = "Server Error";
+   // if (isHttpError(err)) {
+   //    statusCode = err.status;
+   //    errorMessage = err.message;
+   // }
+   // res.status(statusCode).json({ success: false, message: errorMessage });
 };
 exports.rateLimiterUsingThirdParty = rateLimit({
    windowMs: 15 * 60 * 1000, // 15 minutes
