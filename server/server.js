@@ -8,6 +8,7 @@ import Routes from "./routes/routes.js";
 import error from "./middleware/error.js";
 import cors from "cors";
 import { v2 as cloudinary } from "cloudinary";
+import authMiddleware from "./middleware/auth.js";
 
 dotenv.config();
 const app = express();
@@ -27,7 +28,9 @@ if (process.env.NODE_ENV === "development") {
    app.use(morgan("dev"));
 }
 
-app.get("/", (req, res) => res.send("Server is healthy! 💪"));
+app.get("/", authMiddleware.authorize, (req, res) =>
+   res.send("Server is healthy! 💪")
+);
 
 // * Routes
 app.use("/api", Routes());

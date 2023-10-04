@@ -7,8 +7,12 @@ import Merchant from "../models/Merchant.js";
 const authMiddleware = {
    // * Token Authorization
    authenticate: asyncErrorHandler(async (req, res, next) => {
-      const token = req.headers.authorization.split(" ")[1];
-      if (token) {
+      let token;
+      if (
+         req.headers.authorization &&
+         req.headers.authorization.startsWith("Bearer")
+      ) {
+         token = req.headers.authorization.split(" ")[1];
          const userData = jwt.verify(token, process.env.JWT_SECRET_KEY);
          console.log("userData :>> ", userData);
          // * Check in DB
@@ -36,12 +40,19 @@ const authMiddleware = {
    }),
    // * API Authorization
    authorize: (req, res, next) => {
-      const authKey = req.headers.authorization.split(" ")[1];
-
-      if (!authKey || authKey !== process.env.AUTHKEY) {
-         return next(new ErrorHandler("Unauthorized", 401));
+      let authKey;
+      if (
+         req.headers.authorization &&
+         req.headers.authorization.startsWith("Bearer")
+      ) {
+         authKey = req.headers.authorization.split(" ")[1];
+         if (!authKey || authKey !== process.env.AUTHKEY) {
+            return next(new ErrorHandler("Unauthorized", 401));
+         }
+         next();
+      } else {
+         return next(new ErrorHandler("API Key not found", 404));
       }
-      next();
    },
 };
 
