@@ -5,6 +5,10 @@ const productCategories = [
    "Consumables",
    "Jewellery",
    "Home appliance",
+   "Handbags",
+   "Shoes",
+   "Accessories",
+   "Fragrance",
 ];
 
 const productSchema = new Schema(

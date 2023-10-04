@@ -4,7 +4,11 @@ import asyncErrorHandler from "../utils/asyncErrorHandler.js";
 import ErrorHandler from "../utils/errorHandler.js";
 import sendEmail from "../utils/sendEmail.js";
 import crypto from "crypto";
+import Merchant from "../models/Merchant.js";
 
+// * @desc User Registration
+// * @route POST /api/auth/register
+// * @access Private
 export const signup = asyncErrorHandler(async (req, res, next) => {
    const { name, email, password } = req.body;
    const user = new User({ name, email, password });
@@ -19,23 +23,35 @@ export const signup = asyncErrorHandler(async (req, res, next) => {
    });
 });
 
+// * @desc User Login
+// * @route POST /api/auth/login
+// * @access Private
 export const login = asyncErrorHandler(async (req, res, next) => {
    const { email, password } = req.body;
    const user = await User.findOne({ email }).select("+password");
    if (user && (await user.comparePassword(password))) {
       const finalObj = user.toObject();
+      const checkMerchant = await Merchant.findOne({
+         userId: user._id,
+      });
+      const licenseId = checkMerchant?.licenseId || 0;
       delete finalObj.password;
       const token = jwt.sign(finalObj, process.env.JWT_SECRET_KEY);
       res.cookie("token", token, { maxAge: 900000, httpOnly: true });
       res.status(200).json({
          success: true,
-         message: "Account LoggedIn successfully",
+         licenseId,
+         ...finalObj,
+         token,
       });
    } else {
       return next(new ErrorHandler("User not found", 400));
    }
 });
 
+// * @desc Forgot Password Email Send
+// * @route POST /api/auth/forgotPassword
+// * @access Private
 export const forgotPassword = asyncErrorHandler(async (req, res, next) => {
    const { email } = req.body;
    const user = await User.findOne({ email }).select("+password");
@@ -61,6 +77,9 @@ export const forgotPassword = asyncErrorHandler(async (req, res, next) => {
    }
 });
 
+// * @desc Reset Password
+// * @route POST /api/auth/resetPassword
+// * @access Private
 export const resetPassword = asyncErrorHandler(async (req, res, next) => {
    const { password, confirmPassword } = req.body;
    const { token } = req.query;
