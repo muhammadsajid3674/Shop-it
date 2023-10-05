@@ -1,6 +1,5 @@
-import { lastViewed } from "@/data/lastViewed";
-import Text from "./ui/Text";
-import Card from "./ui/Card";
+import { lastViewed } from "@/utils/data";
+import { Card, Text } from "./ui";
 
 const SuggestedProduct = () => {
    return (

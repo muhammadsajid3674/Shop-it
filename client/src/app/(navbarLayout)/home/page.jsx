@@ -1,18 +1,18 @@
-import BestSeller from "@/components/BestSeller";
-import Footer from "@/components/Footer";
-import FooterMenu from "@/components/FooterMenu";
-import HeroSection from "@/components/HeroSection";
-import LastViewed from "@/components/LastViewed";
-import SuggestedProduct from "@/components/SuggestedProduct";
-import Banner from "@/components/ui/Banner";
-import Card from "@/components/ui/Card";
-import MiniBanner from "@/components/ui/MiniBanner";
-import ProductBanner from "@/components/ui/ProductBanner";
-import SliderItem from "@/components/ui/SliderItem";
-import Text from "@/components/ui/Text";
-import { category } from "@/data/category";
-import { miniBanner1 } from "@/data/miniBanner";
-import { slider1 } from "@/data/slider";
+import {
+   Banner,
+   BestSeller,
+   Card,
+   Footer,
+   FooterMenu,
+   HeroSection,
+   LastViewed,
+   MiniBanner,
+   ProductBanner,
+   SliderItem,
+   SuggestedProduct,
+   Text,
+} from "@/components";
+import { category, miniBanner1, slider1 } from "@/utils/data";
 
 const Home = () => {
    return (
@@ -32,7 +32,12 @@ const Home = () => {
             <Text variant={"productTitle"}>Shop by categories</Text>
             <div className='flex gap-4 mt-6'>
                {category.map((data) => (
-                  <Card src={data.src} title={data.title} type='category' />
+                  <Card
+                     key={data.id}
+                     src={data.src}
+                     title={data.title}
+                     type='category'
+                  />
                ))}
             </div>
          </section>

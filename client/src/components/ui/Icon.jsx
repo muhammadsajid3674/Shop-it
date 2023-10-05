@@ -1,5 +1,6 @@
 "use client";
 import {
+   ArrowBackIos,
    ArrowCircleRightOutlined,
    ArrowRightAltOutlined,
    StarOutlined,
@@ -19,4 +20,8 @@ export const RightArrow = () => {
 
 export const CircleRightArrow = () => {
    return <ArrowCircleRightOutlined />;
+};
+
+export const LeftArrow = () => {
+   return <ArrowBackIos />;
 };

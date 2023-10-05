@@ -1,5 +1,5 @@
+import { cn } from "@/utils/utils";
 import { cva } from "class-variance-authority";
-import { cn } from "../../../utils/utils";
 
 const buttonVariants = cva(["border", "rounded-md", "max-w-max"], {
    variants: {

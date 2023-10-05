@@ -1,6 +1,5 @@
-import { lastViewed } from "@/data/lastViewed";
-import Card from "./ui/Card";
-import Text from "./ui/Text";
+import { lastViewed } from "@/utils/data";
+import { Card, Text } from "./ui";
 
 const BestSeller = () => {
    return (

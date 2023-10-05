@@ -1,5 +1,5 @@
+import { cn } from "@/utils/utils";
 import { cva } from "class-variance-authority";
-import { cn } from "../../../utils/utils";
 
 const badgeVariant = cva(
    [

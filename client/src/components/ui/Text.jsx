@@ -1,5 +1,4 @@
-import React from "react";
-import { cn } from "../../../utils/utils";
+import { cn } from "@/utils/utils";
 import { cva } from "class-variance-authority";
 
 const description = cva("cursor-pointer", {
