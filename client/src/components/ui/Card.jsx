@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import Text from "./Text";
 import { StarIcon } from "./Icon";
@@ -14,7 +15,9 @@ const Card = ({
    type,
 }) => {
    return (
-      <div className={`flex-1 p-7 pt-10 bg-cardPrimary relative`}>
+      <div
+         className={`flex flex-col gap-4 flex-1 p-7 pt-10 bg-cardPrimary relative`}
+      >
          {src && title && (
             <div
                className={`relative ${

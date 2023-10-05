@@ -1,4 +1,9 @@
-import { ArrowRightAltOutlined, StarOutlined } from "@mui/icons-material";
+"use client";
+import {
+   ArrowCircleRightOutlined,
+   ArrowRightAltOutlined,
+   StarOutlined,
+} from "@mui/icons-material";
 import React from "react";
 
 export const StarIcon = ({ rating = 1 }) => {
@@ -10,4 +15,8 @@ export const StarIcon = ({ rating = 1 }) => {
 
 export const RightArrow = () => {
    return <ArrowRightAltOutlined />;
+};
+
+export const CircleRightArrow = () => {
+   return <ArrowCircleRightOutlined />;
 };
