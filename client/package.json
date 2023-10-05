@@ -18,7 +18,8 @@
     "next": "13.5.4",
     "react": "^18",
     "react-dom": "^18",
-    "tailwind-merge": "^1.14.0"
+    "tailwind-merge": "^1.14.0",
+    "validator": "^13.11.0"
   },
   "devDependencies": {
     "autoprefixer": "^10",
