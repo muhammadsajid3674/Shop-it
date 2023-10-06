@@ -29,23 +29,27 @@ export const signup = asyncErrorHandler(async (req, res, next) => {
 export const login = asyncErrorHandler(async (req, res, next) => {
    const { email, password } = req.body;
    const user = await User.findOne({ email }).select("+password");
-   if (user && (await user.comparePassword(password))) {
-      const finalObj = user.toObject();
-      const checkMerchant = await Merchant.findOne({
-         userId: user._id,
-      });
-      const licenseId = checkMerchant?.licenseId || 0;
-      delete finalObj.password;
-      const token = jwt.sign(finalObj, process.env.JWT_SECRET_KEY);
-      res.cookie("token", token, { maxAge: 900000, httpOnly: true });
-      res.status(200).json({
-         success: true,
-         licenseId,
-         ...finalObj,
-         token,
-      });
+   if (user) {
+      if (await user.comparePassword(password)) {
+         const finalObj = user.toObject();
+         const checkMerchant = await Merchant.findOne({
+            userId: user._id,
+         });
+         const licenseId = checkMerchant?.licenseId || 0;
+         delete finalObj.password;
+         const token = jwt.sign(finalObj, process.env.JWT_SECRET_KEY);
+         res.cookie("token", token, { maxAge: 900000, httpOnly: true });
+         res.status(200).json({
+            success: true,
+            licenseId,
+            ...finalObj,
+            token,
+         });
+      } else {
+         return next(new ErrorHandler("User not found", 404));
+      }
    } else {
-      return next(new ErrorHandler("User not found", 400));
+      return next(new ErrorHandler("User not found", 404));
    }
 });
 
