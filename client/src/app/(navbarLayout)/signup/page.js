@@ -1,46 +1,93 @@
 "use client";
 import { Text } from "@/components";
-import { Button } from "@/components/ui";
+import { Button, Input } from "@/components/ui";
 import { LeftArrow } from "@/components/ui/Icon";
-import { Input } from "@mui/material";
 import Link from "next/link";
-import { useState } from "react";
-import validator from "validator";
+import { useForm } from "react-hook-form";
+import { ToastContainer, toast } from "react-toastify";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { baseUrl } from "@/app/page";
 
-const page = () => {
-   const [formData, setFormData] = useState({
-      name: "",
-      email: "",
-      password: "",
-   });
+const Signup = () => {
+   // const [formData, setFormData] = useState({
+   //    name: "",
+   //    email: "",
+   //    password: "",
+   // });
 
-   const handleChange = (e) => {
-      const { name, value } = e.target;
-      setFormData((prev) => ({
-         ...prev,
-         [name]: value,
-      }));
-   };
+   // const handleChange = (e) => {
+   //    const { name, value } = e.target;
+   //    setFormData((prev) => ({
+   //       ...prev,
+   //       [name]: value,
+   //    }));
+   // };
 
-   const [errors, setError] = useState({ name: "", email: "", password: "" });
-   const { name, email, password } = formData;
-   const validateData = () => {
-      let errors = {};
-      if (!name) errors.name = "Name is required";
-      if (!validator.isEmail(email)) errors.email = "Email not valid";
-      if (!password) errors.password = "Password is required";
-      return errors;
-   };
+   // const [errors, setError] = useState({ name: "", email: "", password: "" });
+   // const { name, email, password } = formData;
+   // const validateData = () => {
+   //    let errors = {};
+   //    if (!name) errors.name = "Name is required";
+   //    if (!validator.isEmail(email)) errors.email = "Email not valid";
+   //    if (!password) errors.password = "Password is required";
+   //    return errors;
+   // };
 
-   const handleSubmit = (e) => {
-      e.preventDefault();
-      const errors = validateData();
-      if (Object.keys(errors).length) {
-         setError(errors);
-         return;
-      }
-      setError({});
-      console.log("Success");
+   // const handleSubmit = (e) => {
+   //    e.preventDefault();
+   //    const errors = validateData();
+   //    if (Object.keys(errors).length) {
+   //       setError(errors);
+   //       return;
+   //    }
+   //    setError({});
+   //    console.log("Success");
+   // };
+
+   const schema = z
+      .object({
+         name: z.string().min(1, { message: "Name is required" }),
+         email: z.string().email({ message: "Please enter a valid email" }),
+         password: z.string().min(8),
+         confirmPassword: z.string(),
+      })
+      .refine((data) => data.password === data.confirmPassword, {
+         message: "Passwords don't match",
+         path: ["confirmPassword"],
+      });
+
+   const {
+      register,
+      handleSubmit,
+      formState: { errors },
+   } = useForm({ resolver: zodResolver(schema) });
+
+   const onSubmit = (data) => {
+      console.log("data :>> ", data);
+      console.log(
+         " process.env.NEXT_PUBLIC_APIAUTH :>> ",
+         process.env.NEXT_PUBLIC_APIAUTH
+      );
+      fetch(`${baseUrl}/api/auth/register`, {
+         method: "POST",
+         headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${process.env.NEXT_PUBLIC_APIAUTH}`,
+         },
+         body: JSON.stringify(data),
+      })
+         .then((response) => response.json())
+         .then((result) => {
+            console.log("result :>> ", result);
+            if (!result?.success) {
+               return toast("Failed");
+            }
+            toast(result?.message);
+         })
+         .catch((error) => {
+            console.log("Catch :>> ", error);
+         });
    };
 
    return (
@@ -58,51 +105,78 @@ const page = () => {
                <Button variant='outline' title='Sign In' />
             </div>
          </div>
-         <div className='flex flex-col gap-4 items-center bg-cardSecondary rounded-md w-96 p-10'>
+         <div className='flex flex-col gap-4 items-center bg-cardSecondary rounded-md shadow-lg w-96 p-10'>
             <Text variant='price' className='inline-block max-w-max'>
                Sign Up
             </Text>
             <form
                action=''
                className='flex w-full flex-col gap-5'
-               onSubmit={handleSubmit}
+               onSubmit={handleSubmit(onSubmit)}
             >
-               <Input
-                  variant='underLine'
-                  onChange={handleChange}
-                  placeholder='Name'
-                  name='name'
-                  value={formData.name}
-               />
-               <div className='text-red-500'>{errors.name}</div>
-               <Input
-                  variant='underLine'
-                  placeholder='Email'
-                  onChange={handleChange}
-                  name='email'
-                  value={formData.email}
-               />
-               <div className='text-red-500'>{errors.email}</div>
-               <Input
-                  variant='underLine'
-                  onChange={handleChange}
-                  name='password'
-                  type='password'
-                  placeholder='Password'
-                  value={formData.password}
-               />
-               <div className='text-red-500'>{errors.password}</div>
+               <div>
+                  <Input
+                     variant='underLine'
+                     placeholder='Name'
+                     register={register("name")}
+                  />
+                  {errors?.name?.message && (
+                     <Text variant='error' className='ml-2 mt-2'>
+                        {errors?.name?.message}
+                     </Text>
+                  )}
+               </div>
+               <div>
+                  <Input
+                     variant='underLine'
+                     placeholder='Email'
+                     register={register("email")}
+                  />
+                  {errors?.email?.message && (
+                     <Text variant='error' className='ml-2 mt-2'>
+                        {errors?.email?.message}
+                     </Text>
+                  )}
+               </div>
+               <div>
+                  <Input
+                     variant='underLine'
+                     type='password'
+                     placeholder='Password'
+                     register={register("password")}
+                  />
+                  {errors?.password?.message && (
+                     <Text variant='error' className='ml-2 mt-2'>
+                        {errors?.password?.message}
+                     </Text>
+                  )}
+               </div>
+               <div>
+                  <Input
+                     variant='underLine'
+                     type='password'
+                     placeholder='Confirm Password'
+                     register={register("confirmPassword")}
+                  />
+                  {errors?.confirmPassword?.message && (
+                     <Text variant='error' className='ml-2 mt-2'>
+                        {errors?.confirmPassword?.message}
+                     </Text>
+                  )}
+               </div>
                <div className='flex justify-between'>
                   <Text
                      variant='description'
                      className='flex cursor-default gap-2 items-center'
                   >
-                     <input type='checkbox'></input>Remember me?
+                     <input type='checkbox' id='rememberMe'></input>
+                     <label htmlFor='rememberMe'>Remember me?</label>
                   </Text>
-                  <Button variant='primary' title='Login' />
+                  <Button type='submit' variant='primary' title='Sign Up' />
                </div>
             </form>
          </div>
+         <ToastContainer />
          <Text variant='titleSm' className='flex'>
             Forgot your Password?
          </Text>
@@ -110,4 +184,4 @@ const page = () => {
    );
 };
 
-export default page;
+export default Signup;

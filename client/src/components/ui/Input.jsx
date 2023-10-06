@@ -28,9 +28,20 @@ const inputVariants = cva(["w-full", "outline-0"], {
    },
 });
 
-const Input = ({ title, className, sizes, variant, ...props }) => {
+const Input = ({
+   title,
+   className,
+   sizes,
+   variant,
+   register,
+   name,
+   type,
+   ...props
+}) => {
    return (
       <input
+         {...(register ?? {})}
+         type={type ?? "text"}
          {...props}
          className={cn(inputVariants({ variant, sizes, className }))}
       >

@@ -5,12 +5,12 @@
    "main": "server.js",
    "type": "module",
    "scripts": {
-      "start": "node server/server.js",
-      "server": "nodemon server/server.js",
+      "start": "node src/server.js",
+      "server": "nodemon src/server.js",
       "client": "npm start --prefix frontend",
       "dev": "concurrently \"npm run server\" \"npm run client\"",
-      "data:import": "node server/seeder.js",
-      "data:destroy": "node server/seeder.js -d"
+      "data:import": "node src/seeder.js",
+      "data:destroy": "node src/seeder.js -d"
    },
    "author": "sajid",
    "license": "ISC",
