@@ -1,12 +1,12 @@
 /** @type {import('next').NextConfig} */
 
-module.exports = {
-   async rewrites() {
-      return [
-         {
-            source: "/api/:path",
-            destination: "http://localhost:5000/api/:path*",
-         },
-      ];
+const NextConfig = {
+   env: {
+      NEXT_PUBLIC_APIAUTH: "ABiIZ7E4sl/7kupsYpElx5R06XbFdD5SzFCPycj5k8E=",
+      JWT_SECRET: "helloworld",
+      BASE_URL: "http://localhost:5000",
+      NEXTAUTH_URL: "http://localhost:3000",
    },
 };
+
+module.exports = NextConfig;

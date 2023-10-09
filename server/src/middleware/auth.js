@@ -14,7 +14,6 @@ const authMiddleware = {
       ) {
          token = req.headers.authorization.split(" ")[1];
          const userData = jwt.verify(token, process.env.JWT_SECRET_KEY);
-         console.log("userData :>> ", userData);
          // * Check in DB
          const user = await User.findById(userData._id);
          if (user) {

@@ -106,14 +106,12 @@ export const cartCount = asyncErrorHandler(async (req, res, next) => {
 // * @access Private
 export const search = asyncErrorHandler(async (req, res, next) => {
    const { searchTerm } = req.params;
-   console.log('req.params :>> ', req.params);
    const result = await Product.find({
       $or: [
          { name: { $regex: searchTerm, $options: "i" } },
          { description: { $regex: searchTerm, $options: "i" } },
       ],
    }).exec();
-   console.log("result :>> ", result);
    return res.json({ success: true, result });
 });
 

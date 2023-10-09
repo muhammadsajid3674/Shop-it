@@ -1,3 +1,4 @@
+"use client";
 import {
    Banner,
    BestSeller,
@@ -13,8 +14,10 @@ import {
    Text,
 } from "@/components";
 import { category, miniBanner1, slider1 } from "@/utils/data";
+import { useSession } from "next-auth/react";
 
 const Home = () => {
+   const { data: session, status } = useSession();
    return (
       <div className='flex flex-col gap-4'>
          <HeroSection />

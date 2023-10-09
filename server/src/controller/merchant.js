@@ -11,7 +11,6 @@ export const addProduct = asyncErrorHandler(async (req, res) => {
    const { userId } = req;
    const { name, category, description, price, base64Image } = req.body;
    const imageId = uuidv4().split("-")[0];
-   console.log("imageId :>> ", imageId);
 
    const imageUrl = await uploadImage(base64Image, imageId);
    if (typeof imageUrl !== "string") {

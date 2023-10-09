@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Text } from ".";
 import { Button, Input } from "./ui";
-import { ToastContainer } from "react-toastify";
 
 const SignUpForm = ({ onSubmitReady }) => {
    const schema = z
@@ -96,7 +95,6 @@ const SignUpForm = ({ onSubmitReady }) => {
                </div>
             </form>
          </div>
-         <ToastContainer />
       </div>
    );
 };

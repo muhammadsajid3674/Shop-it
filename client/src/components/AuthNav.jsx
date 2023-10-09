@@ -7,7 +7,6 @@ import { usePathname } from "next/navigation";
 
 const AuthNav = () => {
    const pathname = usePathname();
-   console.log(pathname);
    return (
       <>
          <Text variant='titleSm' className='flex flex-1 items-center'>
