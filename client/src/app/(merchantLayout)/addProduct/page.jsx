@@ -1,6 +1,7 @@
 "use client";
 import { Text } from "@/components";
 import { Button, Input } from "@/components/ui";
+import Loader from "@/components/ui/Loader";
 import { apiRoute } from "@/utils/apiRoutes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSession } from "next-auth/react";
@@ -29,7 +30,7 @@ const schema = z.object({
 
 const page = () => {
    const router = useRouter();
-
+   const [loader, setLoader] = useState(false);
    const { data: session, status, update } = useSession();
 
    const [previewImage, setPreviewImage] = useState(null);
@@ -57,12 +58,13 @@ const page = () => {
 
    const onSubmit = async (data) => {
       if (status === "authenticated") {
+         setLoader(true);
          const formData = {
             name: data.name,
             category: data.category,
             description: data.description,
             price: data.price,
-            imageUrl: image,
+            base64Image: image,
          };
          const response = await fetch(apiRoute.addProduct, {
             method: "POST",
@@ -75,6 +77,7 @@ const page = () => {
          const result = await response.json();
          console.log(result);
          if (!result?.success) {
+            setLoader(false);
             return toast.error(result?.message || "Failed");
          }
          toast.success("Product Created");
@@ -157,7 +160,13 @@ const page = () => {
                />
             )}
             <div className='flex justify-end'>
-               <Button type='submit' variant='primary' title='Submit' />
+               {loader && <Loader />}
+               <Button
+                  type='submit'
+                  disabled={loader}
+                  variant='primary'
+                  title='Submit'
+               />
             </div>
          </form>
       </div>

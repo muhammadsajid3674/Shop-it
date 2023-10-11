@@ -4,6 +4,7 @@ import {
    ArrowCircleRightOutlined,
    ArrowRightAltOutlined,
    FavoriteBorderOutlined,
+   MoreVert,
    RemoveCircleOutline,
    RocketLaunch,
    StarOutlined,
@@ -39,4 +40,8 @@ export const Heart = ({ size }) => {
 
 export const Remove = ({ className }) => {
    return <RemoveCircleOutline className={className} />;
+};
+
+export const DotMenu = ({ className }) => {
+   return <MoreVert className={className} />;
 };

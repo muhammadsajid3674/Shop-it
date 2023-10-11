@@ -7,6 +7,9 @@ const NextConfig = {
       BASE_URL: "http://localhost:5000",
       NEXTAUTH_URL: "http://localhost:3000",
    },
+   images: {
+      domains: ["res.cloudinary.com"],
+   },
 };
 
 module.exports = NextConfig;

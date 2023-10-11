@@ -32,20 +32,18 @@ export const addProduct = asyncErrorHandler(async (req, res) => {
 });
 
 // * @desc Get Product Items
-// * @route GET /api/client/getProduct
+// * @route GET /api/merchant/getProduct
 // * @access Private
 export const getProducts = asyncErrorHandler(async (req, res, next) => {
    const userId = req.userId;
-   const { pageNumber, limit } = req.params;
-   if (userId) {
-      const query = Product.find({ userId })
-         .sort({ createdAt: -1 })
-         .skip((Number(pageNumber) - 1) * Number(limit))
-         .limit(Number(limit));
-      const products = await query.exec();
-      res.json({ success: true, products });
-   }
-   return next(new ErrorHandler("User not found", 401));
+   const { page: pageNumber, limit } = req.query;
+   console.log("object :>> ", { pageNumber, limit });
+   const query = Product.find({ userId })
+      .sort({ createdAt: -1 })
+      .skip((Number(pageNumber) - 1) * Number(limit))
+      .limit(Number(limit));
+   const products = await query.exec();
+   res.json({ success: true, products });
 });
 
 // * @desc Delete Product
@@ -54,14 +52,13 @@ export const getProducts = asyncErrorHandler(async (req, res, next) => {
 export const deleteProduct = asyncErrorHandler(async (req, res, next) => {
    const userId = req.userId;
    const { productId } = req.body;
-   if (userId) {
-      const product = Product.findOneAndDelete({ userId, _id: productId });
-      const deleteProduct = await product.exec();
-      if (deleteProduct) {
-         res.json({ success: true, deleteProduct });
-      } else {
-         next(new ErrorHandler("Product not found", 404));
-      }
+   const product = Product.findOneAndDelete({ userId, _id: productId });
+   const deleteProduct = await product.exec();
+   if (deleteProduct) {
+      res.json({ success: true, deleteProduct });
+   } else {
+      next(new ErrorHandler("Product not found", 404));
    }
-   return next(new ErrorHandler("User not found", 401));
 });
+
+//TODO: Update Product
