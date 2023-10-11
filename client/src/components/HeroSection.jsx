@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import Button from "./ui/Button";
-import ArrowRightAltOutlinedIcon from "@mui/icons-material/ArrowRightAltOutlined";
 import Heading from "./ui/Heading";
 import Text from "./ui/Text";
 import Badge from "./ui/Badge";
@@ -10,7 +9,7 @@ import { RightArrow, StarIcon } from "./ui/Icon";
 
 const HeroSection = () => {
    return (
-      <div className='flex p-20 gap-10 bg-cardPrimary mt-5'>
+      <div className='flex p-20 gap-10 bg-cardPrimary'>
          <div className='flex flex-col gap-4 flex-1 justify-center'>
             <Heading
                title={"SHOP COMPUTERS & ACCESSORIES"}
@@ -37,7 +36,7 @@ const HeroSection = () => {
                height={300}
                width={300}
             />
-            <div className='flex bg-white rounded-lg p-6 w-3/4'>
+            <div className='flex bg-cardLight rounded-lg p-6 w-3/4'>
                <div className='flex flex-col gap-2 flex-1'>
                   <Text variant={"infoXs"}>Computer & Accessories</Text>
                   <Text variant={"productTitle"}>

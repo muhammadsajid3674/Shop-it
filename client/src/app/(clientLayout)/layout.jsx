@@ -6,7 +6,7 @@ export default function RootLayout({ children }) {
       <div className='container mx-auto'>
          <MiniNavbar />
          <Navbar />
-         {children}
+         <div className='container mx-auto'>{children}</div>
       </div>
    );
 }

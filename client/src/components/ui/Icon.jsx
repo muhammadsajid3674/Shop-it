@@ -3,6 +3,9 @@ import {
    ArrowBackIos,
    ArrowCircleRightOutlined,
    ArrowRightAltOutlined,
+   FavoriteBorderOutlined,
+   RemoveCircleOutline,
+   RocketLaunch,
    StarOutlined,
 } from "@mui/icons-material";
 import React from "react";
@@ -24,4 +27,16 @@ export const CircleRightArrow = () => {
 
 export const LeftArrow = () => {
    return <ArrowBackIos />;
+};
+
+export const Rocket = () => {
+   return <RocketLaunch />;
+};
+
+export const Heart = ({ size }) => {
+   return <FavoriteBorderOutlined fontSize={size} />;
+};
+
+export const Remove = ({ className }) => {
+   return <RemoveCircleOutline className={className} />;
 };

@@ -10,7 +10,11 @@ export function middleware(request) {
          return NextResponse.redirect(new URL("/home", request.url));
       }
    } else {
-      if (pathname.startsWith("/home")) {
+      const secureRoutes = ["/home", "/addProduct", "/dashboard"];
+      const isSecureRoute = secureRoutes.some((route) =>
+         pathname.startsWith(route)
+      );
+      if (isSecureRoute) {
          return NextResponse.redirect(new URL("/login", request.url));
       } else {
          return NextResponse.next();
