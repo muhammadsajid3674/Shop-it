@@ -73,20 +73,17 @@ export const updateCart = asyncErrorHandler(async (req, res, next) => {
 // * @access Private
 export const viewCart = asyncErrorHandler(async (req, res, next) => {
    const { userId } = req;
-   if (userId) {
-      const cart = await Cart.aggregate([
-         {
-            $lookup: {
-               from: "products",
-               localField: "productId",
-               foreignField: "_id",
-               as: "productData",
-            },
+   const cart = await Cart.aggregate([
+      {
+         $lookup: {
+            from: "products",
+            localField: "productId",
+            foreignField: "_id",
+            as: "productData",
          },
-      ]);
-      return res.json({ success: true, cart });
-   }
-   next(new ErrorHandler("User not found", 404));
+      },
+   ]);
+   return res.json({ success: true, cart });
 });
 
 // * @desc Get total number of cart items
@@ -94,11 +91,9 @@ export const viewCart = asyncErrorHandler(async (req, res, next) => {
 // * @access Private
 export const cartCount = asyncErrorHandler(async (req, res, next) => {
    const { userId } = req;
-   if (userId) {
-      const count = await Cart.countDocuments({ userId });
-      return res.json({ success: true, count });
-   }
-   next(new ErrorHandler("User not found", 404));
+   console.log("userId :>> ", userId);
+   const count = await Cart.countDocuments({ userId });
+   return res.json({ success: true, count });
 });
 
 // * @desc search through name and description

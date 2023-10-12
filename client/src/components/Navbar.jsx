@@ -10,9 +10,11 @@ import {
 } from "@mui/icons-material";
 import Link from "next/link";
 import { Input } from "./ui";
+import { useCartContext } from "@/context/cart";
 
 const Navbar = () => {
    const [isSticky, setIsSticky] = useState(false);
+   const { itemCount } = useCartContext();
    useEffect(() => {
       const handleScroll = () => {
          const isTop = window.scrollY < 40;
@@ -36,9 +38,11 @@ const Navbar = () => {
             <li>
                <Link href='/home'>Logo</Link>
             </li>
-            <li className='group flex items-center gap-2'>
-               <GridViewOutlined fontSize='small' />
-               All
+            <li className='group '>
+               <Link href='/allProducts' className='flex items-center gap-2'>
+                  <GridViewOutlined fontSize='small' />
+                  All
+               </Link>
             </li>
             <li>Today's Deals</li>
             <li>Gift Cards</li>
@@ -59,8 +63,13 @@ const Navbar = () => {
             <li className='flex items-center'>
                <Heart size='small' />
             </li>
-            <li className='flex items-center'>
-               <ShoppingCartOutlined fontSize='small' />
+            <li className=' flex items-center'>
+               <Link href='/cart' className='flex'>
+                  <ShoppingCartOutlined fontSize='small' />
+                  <div className='bg-red-500 rounded-full flex justify-center items-center w-5 h-5 text-white text-xs'>
+                     {itemCount}
+                  </div>
+               </Link>
             </li>
          </ul>
       </nav>

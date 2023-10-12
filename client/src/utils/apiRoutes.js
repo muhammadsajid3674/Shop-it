@@ -5,4 +5,7 @@ export const apiRoute = {
    getProduct: `${process.env.NEXT_PUBLIC_API_BASE_URL}/merchant/getProduct?page=1&limit=5`,
    deleteProduct: `${process.env.NEXT_PUBLIC_API_BASE_URL}/merchant/deleteProduct`,
    getAllProducts: `${process.env.NEXT_PUBLIC_API_BASE_URL}/client/getProduct?page=1&limit=10`,
+   addToCart: `${process.env.NEXT_PUBLIC_API_BASE_URL}/client/updateCart`,
+   viewCart: `${process.env.NEXT_PUBLIC_API_BASE_URL}/client/viewCart`,
+   cartCount: `${process.env.NEXT_PUBLIC_API_BASE_URL}/client/cartCount`,
 };
