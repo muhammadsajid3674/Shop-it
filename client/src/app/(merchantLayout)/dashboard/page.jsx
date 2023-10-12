@@ -3,6 +3,8 @@ import { DashboardCard } from "@/components/ui";
 import { apiRoute } from "@/utils/apiRoutes";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
+import { dateFormat } from "@/utils/date";
+import { format } from "date-fns";
 
 const page = () => {
    const { data: session, status } = useSession();
@@ -40,6 +42,7 @@ const page = () => {
                <DashboardCard
                   key={product._id}
                   productId={product._id}
+                  date={dateFormat(product.createdAt)}
                   removeProducts={removeProduct}
                   src={product.imageUrl}
                   title={product.name}

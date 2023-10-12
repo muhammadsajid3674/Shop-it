@@ -4,7 +4,7 @@ import { DotMenu } from "./Icon";
 import Text from "./Text";
 import Button from "./Button";
 
-const DashboardCard = ({ src, title, removeProducts, productId }) => {
+const DashboardCard = ({ src, title, removeProducts, productId, date }) => {
    return (
       <div className='flex flex-col gap-5 bg-cardLight rounded-md shadow-md p-5'>
          <div className='flex relative justify-end'>
@@ -29,7 +29,7 @@ const DashboardCard = ({ src, title, removeProducts, productId }) => {
             <Text variant='price' className='mt-5'>
                {title}
             </Text>
-            <Text variant='infoXs'>Jan 20th, 2023</Text>
+            <Text variant='infoXs'>{date}</Text>
          </div>
          <div className='flex items-center justify-between'>
             <Text variant='infoXs'>100 Left</Text>

@@ -37,7 +37,6 @@ export const addProduct = asyncErrorHandler(async (req, res) => {
 export const getProducts = asyncErrorHandler(async (req, res, next) => {
    const userId = req.userId;
    const { page: pageNumber, limit } = req.query;
-   console.log("object :>> ", { pageNumber, limit });
    const query = Product.find({ userId })
       .sort({ createdAt: -1 })
       .skip((Number(pageNumber) - 1) * Number(limit))

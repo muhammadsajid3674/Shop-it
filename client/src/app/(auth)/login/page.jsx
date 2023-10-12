@@ -17,8 +17,9 @@ const Login = () => {
       handleSubmit,
       formState: { errors },
    } = useForm({ resolver: zodResolver(schema) });
+
    const onSubmit = async (data) => {
-      const res = await signIn("credentials", {
+      await signIn("credentials", {
          email: data.email,
          password: data.password,
          callbackUrl: "/home",

@@ -35,8 +35,8 @@ export const getProduct = asyncErrorHandler(async (req, res) => {
       .sort({ createdAt: -1 })
       .skip((Number(pageNumber) - 1) * Number(limit))
       .limit(Number(limit));
-   const product = await query.exec();
-   res.json({ success: true, product });
+   const products = await query.exec();
+   res.json({ success: true, products });
 });
 
 // * @desc Add to cart

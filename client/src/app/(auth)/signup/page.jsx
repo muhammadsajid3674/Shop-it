@@ -19,7 +19,6 @@ const SignUp = () => {
          }
       );
       const result = await response.json();
-      console.log("result :>> ", result);
       if (!result?.success) {
          return toast.error(result?.message);
       }

@@ -39,7 +39,7 @@ const Card = ({
                   </div>
                   <Text variant='infoXs'>{reviewCount} reviews</Text>
                </div>
-               <Text variant='price'>${price}</Text>
+               <Text variant='price'>${price.toLocaleString()}</Text>
             </>
          )}
       </div>

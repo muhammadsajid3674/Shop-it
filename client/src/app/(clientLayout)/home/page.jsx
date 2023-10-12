@@ -22,6 +22,12 @@ const Home = () => {
       <div className='flex flex-col gap-4'>
          <HeroSection />
          <section className='flex gap-5 bg-cardSecondary p-6'>
+            <SliderItem
+               key={1}
+               imageSrc='/assets/images/profile.png'
+               title={session?.user.name}
+               miniDesc='recommendations for you'
+            />
             {slider1.map((data) => (
                <SliderItem
                   key={data.id}
@@ -61,7 +67,7 @@ const Home = () => {
             desc='Worldwide shipping. We ship to over 100 countries and regions, right at your doorstep.'
             src='/assets/images/orderBox.png'
          />
-         <LastViewed />
+         {/* <LastViewed /> */}
          <BestSeller />
          <section className='flex gap-4'>
             <ProductBanner />
